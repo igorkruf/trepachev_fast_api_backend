@@ -15,6 +15,14 @@ class DatabaseConfig(BaseModel):
     echo_pool:bool = False
     max_overflow: int = 50
     pool_size: int = 10
+    naming_convention :dict[str,str] = {
+            "ix": "ix_%(column_0_label)s",
+            "uq": "uq_%(table_name)s_%(column_0_N_name)s",
+            "ck": "ck_%(table_name)s_%(constraint_name)s",
+            "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+            "pk": "pk_%(table_name)s",
+        }
+
     
 
 class Settings(BaseSettings):
@@ -28,8 +36,8 @@ class Settings(BaseSettings):
         extra='ignore', 
         case_sensitive=False,
         env_nested_delimiter="__",
-        env_prefix="MY_APP_CONFIG__",
-
+        env_prefix="APP_CONFIG__",
+       
     )
     run: RunConfig = RunConfig()
     router_prefix: RouterPrefix = RouterPrefix()
